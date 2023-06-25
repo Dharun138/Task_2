@@ -1,0 +1,34 @@
+# Import necessary libraries
+import nltk
+from nltk.corpus import words
+from nltk.metrics.distance import edit_distance
+from nltk.tokenize import word_tokenize
+
+# Download required resources
+nltk.download('punkt')
+nltk.download('words')
+
+# Load the English word corpus
+english_words = set(words.words())
+
+# Function to find the nearest correct word
+def find_nearest_word(word):
+    word = word.lower()
+    min_distance = float('inf')
+    nearest_word = None
+
+    for english_word in english_words:
+        distance = edit_distance(word, english_word)
+        if distance < min_distance:
+            min_distance = distance
+            nearest_word = english_word
+
+    return nearest_word
+
+# Test the algorithm
+misspelled_word = 'infrmation'
+nearest_word = find_nearest_word(misspelled_word)
+
+# Print the correction
+print(f"Misspelled word: {misspelled_word}")
+print(f"Nearest word: {nearest_word}")
